@@ -11,7 +11,7 @@ config = {
 conn = sql.connect(**config)
 # create cursor object
 my_cursor = conn.cursor()
-
+DB_NAME = 'covid_eda_db'
 
 # Helper Functions
 def create_db(DB_NAME):

@@ -1,8 +1,6 @@
 from utils import table_1, table_2
-from config import create_db, create_table, show_tables, insert_into_table, select_records, close_conn
+from config import create_db, create_table, show_tables, insert_into_table, select_records, close_conn, DB_NAME
 
-
-DB_NAME = 'covid_eda_db'   # Global Variable
 
 def main():
     """Create DB, tables and populate the tables"""
@@ -121,4 +119,3 @@ if __name__ == '__main__':
         print(e)
     # close the connection
     close_conn()
-    
