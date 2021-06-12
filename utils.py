@@ -44,4 +44,5 @@ def table_2() -> pd.DataFrame:
         t_2[col] = t_2[col].apply(lambda x: int(x))  
     # convert to datetime
     t_2['date'] = pd.to_datetime(t_2['date'])
-    return t_2   
+    return t_2
+   
