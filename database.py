@@ -1,17 +1,28 @@
+import os
 from utils import table_1, table_2
-from config import create_db, create_table, show_tables, insert_into_table, select_records, close_conn, DB_NAME
+from config import DB_NAME, MySqlDb
+
+
+# configuration
+config = {
+    "host": "localhost",
+    "user": os.environ.get("DB_USER"),
+    "password": os.environ.get("DB_PSWD"),
+}
 
 
 def main():
     """Create DB, tables and populate the tables"""
+    # instantiate MySqlDb object
+    my_db = MySqlDb(config)
     # create DB
     try:
-        create_db(DB_NAME)
+        my_db.create_db(DB_NAME)
     except Exception as e:
         print(e)
-        
+
     # create table 1
-    table_name = 'Covid_deaths'
+    table_name = "Covid_deaths"
     sql_query = f"""
                     CREATE TABLE IF NOT EXISTS {table_name}
                         (
@@ -27,27 +38,26 @@ def main():
                         )
                 """
     try:
-        create_table(table_name, sql_query)
+        my_db.create_table(table_name, sql_query)
     except Exception as e:
-        print(e)  
+        print(e)
     #### Populate table
-    t_1 = table_1()
-    t_1_vals = []    # save the data from table1 in a list
-    for row in t_1.itertuples():
+    table1 = table_1()
+    table1_vals = []  # save the data from table1 in a list
+    for row in table1.itertuples():
         val = row[1:]
-        t_1_vals.append(val)
+        table1_vals.append(val)
     sql_query = f"""
                     INSERT INTO {table_name}
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
     try:
-        insert_into_table(table_name, sql_query, t_1_vals)
+        my_db.insert_into_table(table_name, sql_query, table1_vals)
     except Exception as e:
         print(e)
 
-
     # create table 2
-    table_name = 'Covid_vaccinations'
+    table_name = "Covid_vaccinations"
     sql_query = f"""
                     CREATE TABLE IF NOT EXISTS {table_name}
                         (
@@ -77,45 +87,44 @@ def main():
                         )
                 """
     try:
-        create_table(table_name, sql_query)
+        my_db.create_table(table_name, sql_query)
     except Exception as e:
         print(e)
-        
+
     ### Populate table
-    t_2 = table_2()
-    t_2_vals = []      # save the data from table1 in a list
-    for row in t_2.itertuples():
+    table2 = table_2()
+    table2_vals = []  # save the data from table1 in a list
+    for row in table2.itertuples():
         val = row[1:]
-        t_2_vals.append(val)
+        table2_vals.append(val)
     sql_query = f"""
                     INSERT INTO {table_name}
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 """
     try:
-        insert_into_table(table_name, sql_query, t_2_vals)
+        my_db.insert_into_table(table_name, sql_query, table2_vals)
     except Exception as e:
         print(e)
 
-
-
-
-if __name__ == '__main__':
-    main()
     # show tables
-    show_tables()
-    # select records 
-    table_name = 'Covid_deaths'
-    sql_query = f"SELECT * FROM {table_name} LIMIT 5"
-    try:
-        select_records(sql_query)
-    except Exception as e:
-        print(e)       
+    my_db.show_tables()
     # select records
-    table_name = 'Covid_vaccinations' 
+    table_name = "Covid_deaths"
     sql_query = f"SELECT * FROM {table_name} LIMIT 5"
     try:
-        select_records(sql_query)
+        my_db.select_records(sql_query)
+    except Exception as e:
+        print(e)
+    # select records
+    table_name = "Covid_vaccinations"
+    sql_query = f"SELECT * FROM {table_name} LIMIT 5"
+    try:
+        my_db.select_records(sql_query)
     except Exception as e:
         print(e)
     # close the connection
-    close_conn()
+    my_db.close_conn()
+
+
+if __name__ == "__main__":
+    main()

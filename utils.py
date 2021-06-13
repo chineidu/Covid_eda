@@ -19,8 +19,8 @@ def table_1() -> pd.DataFrame:
     # convert to the appropriate data types
     for col in cols:
         t_1[col] = t_1[col].apply(lambda x: int(x))  
-    # convert to datetime
-    t_1['date'] = pd.to_datetime(t_1['date'])
+    # convert to date
+    t_1['date'] = pd.to_datetime(t_1['date']).dt.date
     return t_1
 
 def table_2() -> pd.DataFrame:
@@ -42,7 +42,7 @@ def table_2() -> pd.DataFrame:
     # convert to the appropriate data types
     for col in ['new_tests', 'total_tests', 'total_vaccinations', 'people_vaccinated', 'people_fully_vaccinated', 'new_vaccinations',]:
         t_2[col] = t_2[col].apply(lambda x: int(x))  
-    # convert to datetime
-    t_2['date'] = pd.to_datetime(t_2['date'])
+    # convert to date
+    t_2['date'] = pd.to_datetime(t_2['date']).dt.date
     return t_2
    
