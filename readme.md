@@ -6,13 +6,12 @@ The data was obtained from [Our World in Data](https://ourworldindata.org/covid-
 
 ## Data Cleaning
 
-The data was cleaned using Python.
+The data was cleaned and transformed using Python.
 
-* Null values and missing values were properly handled.
 * The records with missing continent were dropped.
 * Null values in numerical columns were replaced with 0.
 * Null values in categorical columns with were replace 'NULL'.
-* The data was converted to the appropriate data types.
+* The features in the data were converted to the appropriate data types.
 
 ## ETL
 
@@ -34,4 +33,4 @@ Custom Python functions were written which were used to:
 
 ![covid-dashboard](https://i.postimg.cc/rsTyPwxs/covid-dashboard.jpg)
 
-A dashboard was built using Tableau Public which can be found [here](https://public.tableau.com/app/profile/chinedu.ezeofor/viz/Covid19_dashboard_16235235313490/Dashboard1)
+A dashboard was built using Tableau Public which can be found [here](https://public.tableau.com/app/profile/chinedu.ezeofor/viz/Covid19Dashboard_16237024192830/Covid19Dashboard).
