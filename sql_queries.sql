@@ -1,5 +1,6 @@
 USE covid_eda_db;
 SHOW TABLES;
+
 ## Population By Country
 SELECT ISO_code,
     Continent,
@@ -9,6 +10,7 @@ FROM covid_deaths
 GROUP BY Country
 ORDER BY Population DESC
 LIMIT 300;
+
 ## Total_cases vs Total_deaths (Nigeria)
 SELECT ISO_code,
     Continent,
@@ -19,6 +21,7 @@ SELECT ISO_code,
     Total_deaths
 FROM covid_deaths
 WHERE Country REGEXP 'Nigeria';
+
 ## Probability of dying from Covid
 SELECT ISO_code,
     Continent,
@@ -28,6 +31,7 @@ SELECT ISO_code,
     ROUND((Total_deaths * 100) / Total_cases, 2) AS DeathPercentage
 FROM covid_deaths
 WHERE Country REGEXP 'Nigeria|Canada';
+
 ## Total_cases vs Population
 SELECT Continent,
     Country,
@@ -37,6 +41,7 @@ SELECT Continent,
     ROUND((Total_cases * 100) / Population, 2) AS Total_cases_percentage
 FROM covid_deaths
 WHERE Country REGEXP 'Nigeria';
+
 ## Countries with highest infection rate
 SELECT Country,
     MAX(Total_cases) AS Highest_infected_population,
@@ -45,6 +50,7 @@ SELECT Country,
 FROM covid_deaths
 GROUP BY Country
 ORDER BY Total_cases_percentage DESC;
+
 ## Countries with highest infection rate plus date
 SELECT Country,
     date,
@@ -55,6 +61,7 @@ FROM covid_deaths
 GROUP BY Country,
     date
 ORDER BY Total_cases_percentage DESC;
+
 ## Countries with highest death rate
 SELECT Country,
     MAX(Total_cases) AS Highest_infected_population,
@@ -66,6 +73,7 @@ SELECT Country,
 FROM covid_deaths
 GROUP BY Country
 ORDER BY Total_deaths_percentage DESC;
+
 ## Countries with highest death 
 SELECT Country,
     MAX(Total_cases) AS Highest_infected_population,
@@ -74,6 +82,7 @@ SELECT Country,
 FROM covid_deaths
 GROUP BY Country
 ORDER BY Highest_Total_deaths DESC;
+
 ## Continents with highest death 
 SELECT Continent,
     SUM(Highest_Total_deaths) AS Highest_Total_deaths
@@ -89,6 +98,7 @@ FROM (
     ) AS Temp
 GROUP BY Continent
 ORDER BY Highest_Total_deaths DESC;
+
 ## Continents with highest death rate 
 SELECT Continent,
     AVG(Highest_death_rate) AS Avg_death_rate
@@ -104,6 +114,7 @@ FROM (
     ) AS Temp
 GROUP BY Continent
 ORDER BY Highest_death_rate DESC;
+
 ## Continents with highest death 
 SELECT Continent,
     SUM(Highest_Total_deaths) AS Highest_Total_deaths
@@ -132,6 +143,7 @@ SELECT SUM(Total_deaths) AS Total_Deaths,
     SUM(Total_cases) AS Total_Cases,
     ROUND((SUM(Total_deaths) * 100 / SUM(Total_cases)), 2) AS Global_death_rate
 FROM temp;
+
 #######################################################################################################################################################################
 ## Join Covid_Deaths Table and Covid_Vaccinations Table
 SELECT *
@@ -140,6 +152,7 @@ FROM Covid_Deaths AS cd
     AND cd.Date = cv.Date
 WHERE cd.country REGEXP 'Nigeria'
 ORDER BY cv.People_vaccinated DESC;
+
 ## Total amount of people in the world that have been vaccinated by country
 SELECT *
 FROM (
@@ -153,6 +166,7 @@ FROM (
         GROUP BY cd.Country
         ORDER BY Total_vacc DESC
     ) AS Temp;
+
 ## Total amount of people in the world that have been vaccinated
 SELECT SUM(Population) AS Total_Population,
     SUM(Total_vacc) AS Total_vaccinations,
@@ -168,6 +182,7 @@ FROM (
         GROUP BY cd.Country
         ORDER BY Total_vacc DESC
     ) AS Temp;
+
 ## Vaccinations per day by country
 SELECT cd.Continent,
     cd.Country,
@@ -188,6 +203,7 @@ FROM Covid_Deaths AS cd
     AND cd.Date = cv.Date
 WHERE cd.country REGEXP 'Nigeria'
 ORDER BY cd.Date;
+
 ## Cummulative Vaccinations per day in Nigeria
 SELECT cd.Continent,
     cd.Country,
@@ -202,6 +218,7 @@ FROM Covid_Deaths AS cd
     AND cd.Date = cv.Date
 WHERE cd.country REGEXP 'Nigeria'
 ORDER BY cd.Date;
+
 # OR Using CTE (Common Table Expressions)
 ## Cummulative Vaccinations per day in Nigeria
 WITH my_table AS (
@@ -223,6 +240,7 @@ SELECT Country,
             Country
     ) AS Cummulative_vaccinations
 FROM my_table;
+
 ## Cummulative Vaccinations per day globally
 WITH my_table AS (
     SELECT cd.Continent,
@@ -242,6 +260,7 @@ SELECT Country,
             Country
     ) AS Cummulative_vaccinations
 FROM my_table;
+
 #############################################################################################################################################################
 # VIEWS
 ## Continents with highest death 
@@ -260,6 +279,7 @@ FROM (
     ) AS Temp
 GROUP BY Continent
 ORDER BY Highest_Total_deaths DESC;
+
 ## Countries with highest death rate
 CREATE VIEW v_countries_highest_death_rate AS
 SELECT Country,
