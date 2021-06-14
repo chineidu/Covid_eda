@@ -27,9 +27,11 @@ Custom Python functions were written which were used to:
 
 ## EDA
 
-* EDA was carried out in Jupyter notebook and MySQL.
-* Several queries were written in MySQL.
+* EDA was carried out in Jupyter notebook.
+* Several EDA queries were also written in MySQL.
 
 ## Dashboard
+
+![covid-dashboard](https://i.postimg.cc/rsTyPwxs/covid-dashboard.jpg)
 
 A dashboard was built using Tableau Public which can be found [here](https://public.tableau.com/app/profile/chinedu.ezeofor/viz/Covid19_dashboard_16235235313490/Dashboard1)
